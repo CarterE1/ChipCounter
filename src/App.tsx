@@ -14,8 +14,12 @@ function App() {
       <Button onClick={() => setAlertVisable(true)}>Wassss up</Button>
     </div>*/
     <>
-      <PlayerInfo playerName="Player1" startingStack={100}></PlayerInfo>
-      <PlayerInfo playerName="Player2" startingStack={100}></PlayerInfo>
+      <div className="wrapper">
+        <div className="main">
+          <PlayerInfo playerName="Player1" startingStack={100}></PlayerInfo>
+          <PlayerInfo playerName="Player2" startingStack={100}></PlayerInfo>
+        </div>
+      </div>
     </>
   );
 }
