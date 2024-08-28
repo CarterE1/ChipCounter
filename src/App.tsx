@@ -17,6 +17,7 @@ function App() {
       <div className="wrapper">
         <div className="main">
           <PlayerInfo playerName="Player1" startingStack={100}></PlayerInfo>
+          <div className="pot"></div>
           <PlayerInfo playerName="Player2" startingStack={100}></PlayerInfo>
         </div>
       </div>
