@@ -8,7 +8,10 @@ function App() {
   const [potStack, setPotStack] = useState(0);
 
   function updatePot(num: number) {
-    setPotStack(potStack + num);
+    var newPotStack = potStack + num;
+    if (newPotStack >= 0) {
+      setPotStack(newPotStack);
+    }
   }
 
   return (
@@ -28,7 +31,8 @@ function App() {
             updatePot={(num: number) => updatePot(num)}
           ></PlayerInfo>
           <div className="pot">
-            <h1 className="potStack">{potStack}</h1>
+            <h1 className="potStack1">{"$" + potStack}</h1>
+            <h1 className="potStack2">{"$" + potStack}</h1>
           </div>
           <PlayerInfo
             playerName="Player2"

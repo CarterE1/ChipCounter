@@ -9,6 +9,15 @@ type Props = {
 
 function PlayerInfo({ playerName, startingStack, updatePot }: Props) {
   const [stack, setStack] = useState(startingStack);
+
+  function updateStack(num: number){
+    var newStack = stack + num;
+    if (newStack >= 0) {
+      setStack(newStack);
+      return true;
+    }
+    return false;
+  }
   return (
     <>
       <div className={"PlayerPanel row g-2 " + playerName}>
@@ -19,8 +28,9 @@ function PlayerInfo({ playerName, startingStack, updatePot }: Props) {
             variant="primary"
             onClick={() => {
               console.log("Bet");
-              setStack(stack - 5);
-              updatePot(5);
+              if (updateStack(-5)) {
+                updatePot(5);
+              }          
             }}
           >
             Bet
