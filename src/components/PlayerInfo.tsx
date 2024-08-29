@@ -1,36 +1,58 @@
 import { useState } from "react";
 import Button from "./Button";
+import BetAmount from "./BetAmount";
 
 type Props = {
   playerName: string;
-  startingStack: number;
   updatePot: (num: number) => void;
+  updateStack: (num: number) => boolean;
+  getPotStack: () => number;
+  getStack: () => number;
+  foldHand: () => void;
 };
 
-function PlayerInfo({ playerName, startingStack, updatePot }: Props) {
-  const [stack, setStack] = useState(startingStack);
+function PlayerInfo({
+  playerName,
+  updatePot,
+  getStack,
+  foldHand,
+  getPotStack,
+  updateStack,
+}: Props) {
+  const [betAmountVisible, setBetAmountVisible] = useState(false);
+  const [betAmount, setBetAmount] = useState(0);
 
-  function updateStack(num: number){
-    var newStack = stack + num;
-    if (newStack >= 0) {
-      setStack(newStack);
-      return true;
+  function finishBet() {
+    if (updateStack(-1 * betAmount)) {
+      updatePot(betAmount);
     }
-    return false;
+    setBetAmountVisible(false);
   }
+
   return (
     <>
       <div className={"PlayerPanel row g-2 " + playerName}>
-        <h1 className="stack">{"$" + stack}</h1>
+        <h1 className="stack">{"$" + getStack()}</h1>
+        {/* Bet Amount */}
+        {betAmountVisible && (
+          <BetAmount
+            finishBet={() => finishBet()}
+            getPotStack={getPotStack}
+            getStackSize={getStack}
+            getBetAmount={() => betAmount}
+            setBetAmount={(num: number) => setBetAmount(num)}
+          ></BetAmount>
+        )}
+
         {/* Buttons */}
         <div className="col">
           <Button
+            className="main-btns"
             variant="primary"
             onClick={() => {
-              console.log("Bet");
-              if (updateStack(-5)) {
-                updatePot(5);
-              }          
+              /*
+               */
+              setBetAmountVisible(!betAmountVisible);
             }}
           >
             Bet
@@ -38,9 +60,9 @@ function PlayerInfo({ playerName, startingStack, updatePot }: Props) {
         </div>
         <div className="col">
           <Button
+            className="main-btns"
             variant="primary"
             onClick={() => {
-              console.log("Call");
               //updatePot(stack); -- update pot with whatever player is calling
             }}
           >
@@ -49,9 +71,10 @@ function PlayerInfo({ playerName, startingStack, updatePot }: Props) {
         </div>
         <div className="col">
           <Button
+            className="main-btns"
             variant="danger"
             onClick={() => {
-              console.log("Fold");
+              foldHand();
             }}
           >
             Fold

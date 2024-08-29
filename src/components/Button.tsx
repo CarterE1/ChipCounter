@@ -12,13 +12,19 @@ type Props = {
     | "warning"
     | "info";
   onClick: () => void;
+  className?: string;
 };
 
-function Button({ children, variant = "dark", onClick }: Props) {
+function Button({
+  children,
+  variant = "dark",
+  onClick,
+  className = "",
+}: Props) {
   return (
     <button
       type="button"
-      className={"btn btn-" + variant + " form-control"}
+      className={"btn btn-" + variant + " form-control " + className}
       onClick={onClick}
     >
       {children}
