@@ -4,22 +4,35 @@ import { useState } from "react";
 
 function App() {
   //const [alertVisable, setAlertVisable] = useState(false);
-  var startingStack = 100;
+  var startingStack = 1000;
   const [stack1, setStack1] = useState(startingStack);
   const [stack2, setStack2] = useState(startingStack);
+  const [player1Call, setPlayer1Call] = useState({ enabled: false, amount: 0 });
+  const [player2Call, setPlayer2Call] = useState({ enabled: false, amount: 0 });
 
   const [potStack, setPotStack] = useState(0);
 
-  function updatePot(num: number) {
+  function updatePlayerCall(player: string, amount: number) {
+    if (player === "player1") {
+      setPlayer2Call({ enabled: true, amount: amount });
+      setPlayer1Call({ enabled: false, amount: 0 });
+    } else {
+      setPlayer1Call({ enabled: true, amount: amount });
+      setPlayer2Call({ enabled: false, amount: 0 });
+    }
+  }
+
+  function updatePot(num: number, player: string) {
     var newPotStack = potStack + num;
     if (newPotStack >= 0) {
       setPotStack(newPotStack);
+      updatePlayerCall(player, num);
     }
   }
 
   function updateStack(num: number, player: string) {
     var newStack = player === "player1" ? stack1 + num : stack2 + num;
-    if (newStack && newStack >= 0) {
+    if (newStack != null && newStack >= 0) {
       player === "player1" ? setStack1(newStack) : setStack2(newStack);
       return true;
     }
@@ -56,8 +69,9 @@ function App() {
             getStack={() => getStack("player1")}
             getPotStack={() => potStack}
             updateStack={(num: number) => updateStack(num, "player1")}
-            updatePot={(num: number) => updatePot(num)}
+            updatePot={(num: number) => updatePot(num, "player1")}
             foldHand={() => foldHand("player1")}
+            getCallInfo={() => player1Call}
           ></PlayerInfo>
           {/* Pot */}
           <div className="pot">
@@ -72,8 +86,9 @@ function App() {
             getStack={() => getStack("player2")}
             getPotStack={() => potStack}
             updateStack={(num: number) => updateStack(num, "player2")}
-            updatePot={(num: number) => updatePot(num)}
+            updatePot={(num: number) => updatePot(num, "player2")}
             foldHand={() => foldHand("player2")}
+            getCallInfo={() => player2Call}
           ></PlayerInfo>
         </div>
       </div>

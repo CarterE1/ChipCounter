@@ -6,6 +6,7 @@ type Props = {
   getStackSize: () => number;
   getBetAmount: () => number;
   setBetAmount: (num: number) => void;
+  hideBetAmountLabel: () => void;
   finishBet: () => void;
 };
 
@@ -15,43 +16,44 @@ function BetAmount({
   getBetAmount,
   setBetAmount,
   finishBet,
+  hideBetAmountLabel,
 }: Props) {
   return (
     <>
       <div className="bet-amount">
         <div className="btn-group bet-buttons" role="group">
-          <Button variant="primary" onClick={() => {}}>
-            1/2x
+          <Button
+            variant="primary"
+            onClick={() => {
+              setBetAmount(getBetAmount() - 5);
+              document
+                .querySelector("#betAmount")
+                ?.setAttribute("value", getBetAmount().toString());
+            }}
+          >
+            -
           </Button>
           <Button variant="primary" onClick={() => {}}>
             POT
           </Button>
-          <Button variant="primary" onClick={() => {}}>
-            2x
-          </Button>
           <Button
-            variant="success"
+            variant="primary"
             onClick={() => {
-              finishBet();
+              setBetAmount(getBetAmount() + 5);
+              document
+                .querySelector("#betAmount")
+                ?.setAttribute("value", getBetAmount().toString());
             }}
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              fill="currentColor"
-              className="bi bi-check-circle-fill"
-              viewBox="0 0 16 16"
-            >
-              <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
-            </svg>
+            +
           </Button>
         </div>
         <div>
           <input
             type="range"
-            className="form-range bet-slider"
+            className="slider bet-slider"
             id="betAmount"
+            step="5"
             min="0"
             max={getStackSize()}
             onChange={(e) => setBetAmount(parseInt(e.target.value))}
@@ -59,6 +61,24 @@ function BetAmount({
           <label htmlFor="betAmount" className="bet-form-label">
             {"$" + getBetAmount()}
           </label>
+        </div>
+        <div className="btn-group bet-confirm-buttons" role="group">
+          <Button
+            variant="danger"
+            onClick={() => {
+              hideBetAmountLabel();
+            }}
+          >
+            CANCEL
+          </Button>
+          <Button
+            variant="success"
+            onClick={() => {
+              finishBet();
+            }}
+          >
+            BET
+          </Button>
         </div>
       </div>
     </>
