@@ -21,9 +21,9 @@
 .PlayerPanel{
   flex-grow: 0.8;
   padding: 1.5%;
-  background: rgba(66, 66, 66, 0.1);
-  backdrop-filter: blur( 15px );
-  -webkit-backdrop-filter: blur( 15px);
+  background: rgba(45, 45, 45, 0.1);
+  backdrop-filter: blur( 20px );
+  -webkit-backdrop-filter: blur( 20px);
   border-radius: 10px;
 }
 
@@ -41,9 +41,9 @@
 .pot{
   margin-bottom: 2%;
   flex-grow: 1.5;
-  background: rgba(77, 77, 77, 0.3);
-  backdrop-filter: blur( 15px );
-  -webkit-backdrop-filter: blur( 15px);
+  background: rgba(126, 126, 126, 0.3);
+  backdrop-filter: blur( 20px );
+  -webkit-backdrop-filter: blur( 20px);
   border-radius: 10px;
   width: 95%;
 
@@ -95,7 +95,7 @@
 .bet-amount{
   position: absolute;
 
-  background: rgba(0, 0, 0, 0.788);
+  background: rgba(17, 17, 17, 0.788);
   backdrop-filter: blur( 20px );
   -webkit-backdrop-filter: blur( 20px);
   border-radius: 10px;
@@ -155,7 +155,7 @@
 .bet-form-label {
   color: rgba(255, 255, 255, 0.85);
   font-weight: bold;
-  text-shadow: -1px 1px 5px rgba(0, 0, 0, 0.606);
+  text-shadow: -1px 1px 5px rgba(35, 35, 35, 0.606);
   font-size: 23px;
   margin-left: 3%;
 }
@@ -198,8 +198,8 @@ body {
 
 body {
   --s: 100px; /* control the size */
-  --c1: #0a0a0a;
-  --c2: #000000;
+  --c1: #383838;
+  --c2: #1a1a1a;
   
   --_s: calc(2*var(--s)) calc(2*var(--s));
   --_g: var(--_s) conic-gradient(at 40% 40%,#0000 75%,var(--c1) 0);
