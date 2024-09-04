@@ -50,6 +50,10 @@ function App() {
     setPotStack(0);
   }
 
+  function moneyRound(num: number) {
+    return Math.ceil(num * 100) / 100;
+  }
+
   return (
     /*<div>
       {alertVisable && (
@@ -72,11 +76,12 @@ function App() {
             updatePot={(num: number) => updatePot(num, "player1")}
             foldHand={() => foldHand("player1")}
             getCallInfo={() => player1Call}
+            getStartingStack={() => startingStack}
           ></PlayerInfo>
           {/* Pot */}
           <div className="pot">
-            <h1 className="potStack1">{"$" + potStack}</h1>
-            <h1 className="potStack2">{"$" + potStack}</h1>
+            <h1 className="potStack1">{"$" + moneyRound(potStack)}</h1>
+            <h1 className="potStack2">{"$" + moneyRound(potStack)}</h1>
           </div>
           {/* Player2 */}
           <PlayerInfo
@@ -89,6 +94,7 @@ function App() {
             updatePot={(num: number) => updatePot(num, "player2")}
             foldHand={() => foldHand("player2")}
             getCallInfo={() => player2Call}
+            getStartingStack={() => startingStack}
           ></PlayerInfo>
         </div>
       </div>

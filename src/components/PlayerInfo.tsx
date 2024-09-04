@@ -10,6 +10,7 @@ type Props = {
   getStack: () => number;
   getCallInfo: () => { enabled: boolean; amount: number };
   foldHand: () => void;
+  getStartingStack: () => number;
 };
 
 function PlayerInfo({
@@ -20,6 +21,7 @@ function PlayerInfo({
   getPotStack,
   getCallInfo,
   updateStack,
+  getStartingStack
 }: Props) {
   const [betAmountVisible, setBetAmountVisible] = useState(false);
   const [betAmount, setBetAmount] = useState(0);
@@ -32,14 +34,25 @@ function PlayerInfo({
     setBetAmountVisible(false);
   }
 
+  function setBet(num: number) {
+    if (num >= 0 && num <= getStack()) {
+      setBetAmount(num)
+    }
+    return betAmount
+  }
+
   function hideBetAmount() {
     setBetAmountVisible(false);
+  }
+
+  function moneyRound(num: number) {
+    return Math.ceil(num * 100) / 100;
   }
 
   return (
     <>
       <div className={"PlayerPanel row g-2 " + playerName}>
-        <h1 className="stack">{"$" + getStack()}</h1>
+        <h1 className="stack">{"$" + moneyRound(getStack())}</h1>
         {/* Bet Amount */}
         {betAmountVisible && (
           <BetAmount
@@ -48,9 +61,8 @@ function PlayerInfo({
             getStackSize={getStack}
             getBetAmount={() => betAmount}
             hideBetAmountLabel={() => hideBetAmount()}
-            setBetAmount={(num: number) => {
-              num >= 0 && num <= getStack() ? setBetAmount(num) : null;
-            }}
+            setBetAmount={(num: number) => setBet(num)}
+            getStartingStack={() => getStartingStack()}
           ></BetAmount>
         )}
 

@@ -4,8 +4,9 @@ import Button from "./Button";
 type Props = {
   getPotStack: () => number;
   getStackSize: () => number;
+  getStartingStack: () => number;
   getBetAmount: () => number;
-  setBetAmount: (num: number) => void;
+  setBetAmount: (num: number) => number;
   hideBetAmountLabel: () => void;
   finishBet: () => void;
 };
@@ -14,10 +15,18 @@ function BetAmount({
   getPotStack,
   getStackSize,
   getBetAmount,
+  getStartingStack,
   setBetAmount,
   finishBet,
   hideBetAmountLabel,
 }: Props) {
+  const [betValue, setBetValue] = useState(0)
+  const stepValue = getStartingStack() / 200
+
+  function moneyRound(num: number) {
+    return Math.ceil(num * 100) / 100;
+  }
+
   return (
     <>
       <div className="bet-amount">
@@ -25,10 +34,7 @@ function BetAmount({
           <Button
             variant="primary"
             onClick={() => {
-              setBetAmount(getBetAmount() - 5);
-              document
-                .querySelector("#betAmount")
-                ?.setAttribute("value", getBetAmount().toString());
+              setBetValue(setBetAmount(getBetAmount() - stepValue));
             }}
           >
             -
@@ -39,10 +45,7 @@ function BetAmount({
           <Button
             variant="primary"
             onClick={() => {
-              setBetAmount(getBetAmount() + 5);
-              document
-                .querySelector("#betAmount")
-                ?.setAttribute("value", getBetAmount().toString());
+              setBetValue(setBetAmount(getBetAmount() + stepValue));
             }}
           >
             +
@@ -53,13 +56,14 @@ function BetAmount({
             type="range"
             className="slider bet-slider"
             id="betAmount"
-            step="5"
+            step={stepValue}
             min="0"
             max={getStackSize()}
-            onChange={(e) => setBetAmount(parseInt(e.target.value))}
+            value={betValue}
+            onChange={(e) => setBetValue(setBetAmount(parseFloat(e.target.value)))}
           />
           <label htmlFor="betAmount" className="bet-form-label">
-            {"$" + getBetAmount()}
+            {"$" + moneyRound(getBetAmount())}
           </label>
         </div>
         <div className="btn-group bet-confirm-buttons" role="group">
